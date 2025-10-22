@@ -25,10 +25,6 @@ resource "azurerm_fabric_capacity" "capacity" {
   resource_group_name = azurerm_resource_group.fabric_rg.name
   location            = var.location
 
-  administration {
-    members = [var.fabric_admin_email]
-  }
-
   sku {
     name = var.capacity_sku
     tier = "Fabric"
@@ -84,19 +80,19 @@ resource "fabric_lakehouse" "lakehouse" {
 
 resource "fabric_spark_custom_pool" "custom_pool" {
   workspace_id = fabric_workspace.workspace.id
-  display_name = var.spark_pool_name
+  name         = var.spark_pool_name
   type         = "Workspace"
 
   node_family = var.spark_pool_node_family
   node_size   = var.spark_pool_node_size
 
-  auto_scale {
+  auto_scale = {
     enabled        = var.spark_pool_autoscale_enabled
     min_node_count = var.spark_pool_autoscale_min_nodes
     max_node_count = var.spark_pool_autoscale_max_nodes
   }
 
-  dynamic_executor_allocation {
+  dynamic_executor_allocation = {
     enabled       = var.spark_pool_dynamic_executor_enabled
     min_executors = var.spark_pool_dynamic_executor_min
     max_executors = var.spark_pool_dynamic_executor_max
@@ -128,7 +124,7 @@ resource "fabric_spark_workspace_settings" "workspace_spark_settings" {
   pool {
     default_pool {
       type = "Workspace"
-      name = fabric_spark_custom_pool.custom_pool.display_name
+      name = fabric_spark_custom_pool.custom_pool.name
     }
 
     starter_pool {
