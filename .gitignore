@@ -1,0 +1,37 @@
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!dev.tfvars
+!test.tfvars
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Terraform plan files
+*.tfplan
+
+# Local environment files
+.env
+.env.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.backup
+*.bak
